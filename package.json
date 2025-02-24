@@ -4,7 +4,8 @@
   "description": "# Tử Vi Huyền Minh",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "your-build-command-here"
   },
   "keywords": [],
   "author": "",
