@@ -100,19 +100,19 @@ async function convertToLunarDate(solarDate) {
 // Hàm tạo prompt cho AI
 function generatePrompt(lunarDate, hourdate) {
   return `Bạn là một chuyên gia tử vi phương Đông. Hãy phân tích vận mệnh của một người sinh vào ngày âm lịch ${lunarDate}, giờ sinh ${hourdate} theo định dạng JSON sau, viết chi tiết, hấp dẫn, và bí ẩn:\n\n` +
-         `{\n` +
-         `  "lunarDate": "${lunarDate}",\n` +
-         `  "hourdate": "${hourdate}",\n` +
-         `  "result": {\n` +
-         `    "cungMenh": "Cung mệnh của bạn thuộc [Ngũ hành – Tên cung], mang năng lượng [mô tả ngắn, bí ẩn]. [Chi tiết ngũ hành, Thiên Can, Địa Chi, và ảnh hưởng của giờ sinh].",\n` +
-         `    "tinhCach": "Bạn là người [mô tả tính cách], với [ảnh hưởng của giờ sinh]. AI nhận thấy bạn có [điểm nổi bật, ví dụ nghề nghiệp phù hợp].",\n` +
-         `    "suNghiepTaiLoc": "Sự nghiệp: [Luận đoán sự nghiệp 2025, cơ hội, lời khuyên], Tài lộc: [Luận đoán tài lộc 2025, thời điểm may mắn, lời cảnh báo].",\n` +
-         `    "tinhDuynGiaDao": "Tình duyên: [Luận đoán tình duyên 2025, cơ hội, thử thách], Gia đạo: [Luận đoán gia đạo 2025, lời khuyên].",\n` +
-         `    "loiKhuyen": "1. [Lời khuyên 1]. 2. [Lời khuyên 2]. 3. [Lời khuyên 3].",\n` +
-         `    "vanHan2025": "[Luận đoán vận hạn chi tiết, thử thách, và cách vượt qua trong năm 2025]."\n` +
-         `  }\n` +
-         `}\n\n` +
-         `🎯 Viết sinh động, bí ẩn, và chuyên nghiệp, nhấn mạnh sự chính xác của AI.`;
+    `{\n` +
+    `  "lunarDate": "${lunarDate}",\n` +
+    `  "hourdate": "${hourdate}",\n` +
+    `  "result": {\n` +
+    `    "cungMenh": "Cung mệnh của bạn thuộc [Ngũ hành – Tên cung], mang năng lượng [mô tả ngắn, bí ẩn]. [Chi tiết ngũ hành, Thiên Can, Địa Chi, và ảnh hưởng của giờ sinh].",\n` +
+    `    "tinhCach": "Bạn là người [mô tả tính cách], với [ảnh hưởng của giờ sinh]. AI nhận thấy bạn có [điểm nổi bật, ví dụ nghề nghiệp phù hợp].",\n` +
+    `    "suNghiepTaiLoc": "Sự nghiệp: [Luận đoán sự nghiệp 2025, cơ hội, lời khuyên], Tài lộc: [Luận đoán tài lộc 2025, thời điểm may mắn, lời cảnh báo].",\n` +
+    `    "tinhDuynGiaDao": "Tình duyên: [Luận đoán tình duyên 2025, cơ hội, thử thách], Gia đạo: [Luận đoán gia đạo 2025, lời khuyên].",\n` +
+    `    "loiKhuyen": "1. [Lời khuyên 1]. 2. [Lời khuyên 2]. 3. [Lời khuyên 3].",\n` +
+    `    "vanHan2025": "[Luận đoán vận hạn chi tiết, thử thách, và cách vượt qua trong năm 2025]."\n` +
+    `  }\n` +
+    `}\n\n` +
+    `🎯 Viết sinh động, bí ẩn, và chuyên nghiệp, nhấn mạnh sự chính xác của AI.`;
 }
 
 // Hàm gọi Gemini API
