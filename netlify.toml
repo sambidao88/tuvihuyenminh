@@ -1,0 +1,19 @@
+# netlify.toml
+
+[build]
+  publish = "public"
+  command = "npm run build"
+  functions = "functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[dev]
+  command = "npm run start"
+  port = 8888
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true

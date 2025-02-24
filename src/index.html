@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tử Vi Huyền Minh</title>
+    <!-- Tailwind CSS CDN (hỗ trợ Material Design qua custom) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HTMX CDN -->
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <!-- Material Icons từ Google -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Nhúng font Roboto cục bộ (tải từ Google Fonts hoặc dùng file .woff2/.ttf) */
+        @font-face {
+            font-family: 'Roboto';
+            src: url('/fonts/roboto-regular.woff2') format('woff2'),
+                 url('/fonts/roboto-regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Roboto';
+            src: url('/fonts/roboto-medium.woff2') format('woff2'),
+                 url('/fonts/roboto-medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Roboto';
+            src: url('/fonts/roboto-bold.woff2') format('woff2'),
+                 url('/fonts/roboto-bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif; /* Fallback font Arial và sans-serif */
+            background: linear-gradient(to bottom, #fffaf0, #f5e6cc); /* Nền Amber 50 -> Amber 100, sáng và ấm áp */
+            min-height: 100vh;
+            margin: 0;
+        }
+        main {
+            background: linear-gradient(to bottom, rgba(255, 236, 204, 0.9), rgba(255, 224, 178, 0.85)), /* Amber 100 -> Amber 200 với opacity */
+                        url('https://www.freeiconspng.com/uploads/chinese-pattern-png-8.png') no-repeat center;
+            background-size: cover;
+            background-blend-mode: overlay;
+            background-attachment: fixed; /* Parallax nhẹ khi cuộn */
+        }
+        header {
+                        url('https://www.freeiconspng.com/uploads/chinese-pattern-png-8.png') no-repeat center;
+            background-size: cover;
+            background-blend-mode: overlay;
+            padding: 1rem 0.5rem; /* Padding nhỏ trên mobile */
+        }
+        main {
+            border-radius: 0 0 16px 16px; /* Bo góc dưới main cho thanh lịch */
+            margin: 0 0.5rem 1rem; /* Margin cho mobile */
+            padding: 1rem 0.5rem; /* Padding nhỏ trên mobile */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Giữ bóng cho main theo Material Design */
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 1rem; /* Căn giữa và cách header 1rem */
+            width: 80px; /* Kích thước nhỏ trên mobile */
+            height: auto;
+        }
+        @media (min-width: 640px) {
+            .logo {
+                width: 120px; /* Tăng kích thước trên desktop */
+                margin-bottom: 2rem; /* Tăng cách trên desktop */
+            }
+            header, main {
+                padding: 2rem 2rem;
+            }
+            main {
+                margin: 0 2rem 2rem;
+                max-width: 28rem;
+                border-radius: 0 0 24px 24px; /* Bo góc lớn hơn trên desktop */
+            }
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            p, .input-field input, button { font-size: 1rem; }
+            .input-field label { font-size: 0.875rem; }
+            .input-field input:focus + label,
+            .input-field input:not(:placeholder-shown) + label { font-size: 0.75rem; }
+            .error-message, .success-message { font-size: 0.75rem; }
+            button {
+                width: 2/3; /* Giữ kích thước 2/3 trên desktop */
+                padding: 0.75rem; /* Tăng padding trên desktop để cân đối */
+            }
+        }
+        .input-field {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .input-field label {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.75rem;
+            font-size: 0.75rem;
+            color: #757575; /* Gray 600, màu phụ Material Design */
+            transition: 0.2s ease-out;
+            pointer-events: none;
+        }
+        .input-field input:focus + label,
+        .input-field input:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            font-size: 0.625rem;
+            color: #d32f2f; /* Red 700, màu chính Material Design */
+        }
+        .input-field input {
+            width: 100%;
+            padding: 0.75rem 0.5rem 0.5rem 0.75rem;
+            border: 1px solid #e0e0e0; /* Gray 300, viền nhẹ Material Design */
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .input-field input:focus {
+            border-color: #d32f2f; /* Red 700 */
+            box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+            outline: none;
+        }
+        .error-message, .success-message {
+            font-size: 0.625rem;
+            margin-top: 0.25rem;
+            padding-left: 0.75rem;
+        }
+        .error-message { color: #d32f2f; } /* Red 700 */
+        .success-message { color: #2e7d32; } /* Green 700 */
+        button {
+            width: 2/3; /* Giảm kích thước nút còn 2/3 */
+            padding: 0.5rem; /* Giảm padding cho nút nhỏ hơn */
+            background: #d32f2f; /* Red 700, màu nút chính Material Design */
+            color: #fff;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0 auto; /* Căn giữa nút */
+            display: block; /* Đảm bảo nút là block để căn giữa */
+        }
+        button:hover {
+            background: #b71c1c; /* Red 900 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            background: #a61a1a; /* Red A700 */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .htmx-indicator {
+            display: none;
+        }
+        .htmx-request .htmx-indicator {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="" alt="Tử Vi Huyền Minh Logo" class="logo">
+    </div>
+    <!-- Header -->
+    <header class="text-center">
+        <h1 class="text-lg md:text-3xl font-bold text-red-700">Tử Vi Huyền Minh</h1> <!-- Red 700, tương phản tốt với nền vàng cam sáng -->
+        <p class="mt-2 text-base md:text-lg max-w-3xl md:max-w-xl mx-auto font-semibold text-gray-700">Nhận ngay luận đoán về công danh, sự nghiệp tình cảm, tài lộc và vận trình 2025</p> <!-- Gray 900, tương phản tốt, không chỏi với main -->
+    </header>
+
+    <!-- Main -->
+    <main id="main-content" class="mx-auto">
+        <h2 class="text-xl md:text-xl font-semibold text-red-700 mb-4 text-center">Xem Tử Vi Miễn Phí Với AI</h2> <!-- Red 700 -->
+        <form id="birthForm" hx-post="/.netlify/functions/submit" hx-target="#main-content" hx-swap="outerHTML" hx-indicator="#loading" hx-throttle="3000" class="space-y-3 md:space-y-4">
+            <div class="input-field">
+                <input type="text" id="name" name="name" placeholder=" " required
+                       class="w-full bg-white border border-gray-300 rounded-lg text-gray-800 focus:outline-none shadow-sm">
+                <label for="name">Họ và tên</label>
+            </div>
+            <div class="input-field">
+                <input type="email" id="email" name="email" placeholder=" " required
+                       class="w-full bg-white border border-gray-300 rounded-lg text-gray-800 focus:outline-none shadow-sm">
+                <label for="email">Email</label>
+                <p id="emailError" class="error-message hidden"></p>
+            </div>
+            <div class="input-field">
+                <input type="tel" id="phone" name="phone" placeholder=" " required
+                       class="w-full bg-white border border-gray-300 rounded-lg text-gray-800 focus:outline-none shadow-sm">
+                <label for="phone">Số điện thoại</label>
+                <p id="phoneError" class="error-message hidden"></p>
+            </div>
+            <div class="input-field">
+                <input type="text" id="solarBirthdate" name="solarBirthdate" placeholder=" " required pattern="\d{2}/\d{2}/\d{4}"
+                       class="w-full bg-white border border-gray-300 rounded-lg text-gray-800 focus:outline-none shadow-sm"
+                       title="Vui lòng nhập ngày sinh theo định dạng dd/mm/yyyy">
+                <label for="solarBirthdate">Ngày sinh (dd/mm/yyyy)</label>
+            </div>
+            <div class="input-field">
+                <input type="text" id="hourdate" name="hourdate" placeholder=" " required pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                       class="w-full bg-white border border-gray-300 rounded-lg text-gray-800 focus:outline-none shadow-sm"
+                       title="Vui lòng nhập giờ sinh theo định dạng hh:mm (VD: 14:30)">
+                <label for="hourdate">Giờ sinh (hh:mm)</label>
+            </div>
+            <button type="submit" class="w-2/3 mx-auto font-bold flex items-center justify-center gap-2">
+                XEM NGAY
+                <span id="loading" class="htmx-indicator">
+                    <i class="material-icons animate-spin">autorenew</i>
+                </span>
+            </button>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 md:py-6 text-center text-gray-600">
+        <p class="text-sm md:text-base">© 2025 Tử Vi Huyền Minh</p>
+    </footer>
+
+    <script>
+        // Kiểm tra email hợp lệ
+        document.getElementById('email').addEventListener('blur', function() {
+            const email = this.value;
+            const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+            const errorElement = document.getElementById('emailError');
+            
+            if (!emailRegex.test(email)) {
+                errorElement.textContent = 'Email không hợp lệ! Vui lòng nhập đúng định dạng (VD: example@domain.com)';
+                errorElement.classList.remove('hidden');
+                this.closest('.input-field').classList.add('border-red-500');
+            } else {
+                errorElement.textContent = 'Email hợp lệ';
+                errorElement.classList.remove('hidden', 'text-red-600');
+                errorElement.classList.add('text-green-600');
+                this.closest('.input-field').classList.remove('border-red-500');
+                this.closest('.input-field').classList.add('border-green-500');
+            }
+        });
+
+        // Kiểm tra số điện thoại hợp lệ
+        document.getElementById('phone').addEventListener('blur', function() {
+            const phone = this.value;
+            const phoneRegex = /^0[0-9]{9}$/;
+            const errorElement = document.getElementById('phoneError');
+            
+            if (!phoneRegex.test(phone)) {
+                errorElement.textContent = 'Số điện thoại không hợp lệ! Phải bắt đầu bằng 0 và có 10 chữ số';
+                errorElement.classList.remove('hidden');
+                this.closest('.input-field').classList.add('border-red-500');
+            } else {
+                errorElement.textContent = 'Số điện thoại hợp lệ';
+                errorElement.classList.remove('hidden', 'text-red-600');
+                errorElement.classList.add('text-green-600');
+                this.closest('.input-field').classList.remove('border-red-500');
+                this.closest('.input-field').classList.add('border-green-500');
+            }
+        });
+
+        // Kiểm tra tuổi >= 15
+        document.getElementById('birthForm').addEventListener('submit', function(e) {
+            const solarBirthdate = document.getElementById('solarBirthdate').value;
+            const [day, month, year] = solarBirthdate.split('/').map(Number);
+            const birthDate = new Date(year, month - 1, day);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear() - 
+                       (today.getMonth() < birthDate.getMonth() || 
+                       (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate()) ? 1 : 0);
+            
+            if (age < 15) {
+                e.preventDefault();
+                alert('Bạn phải từ 15 tuổi trở lên để xem tử vi!');
+            }
+        });
+    </script>
+</body>
+</html>

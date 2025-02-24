@@ -1,0 +1,78 @@
+/* Main CSS styles for the Tử Vi Huyền Minh application */
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(to bottom, #fffaf0, #f5e6cc);
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #d32f2f; /* Red 700 */
+}
+
+.input-field {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.input-field label {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.75rem;
+    font-size: 0.75rem;
+    color: #757575; /* Gray 600 */
+    transition: 0.2s ease-out;
+    pointer-events: none;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 0.75rem 0.5rem 0.5rem 0.75rem;
+    border: 1px solid #e0e0e0; /* Gray 300 */
+    border-radius: 8px;
+    font-size: 0.875rem;
+    background: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-field input:focus {
+    border-color: #d32f2f; /* Red 700 */
+    box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+    outline: none;
+}
+
+.error-message {
+    color: #d32f2f; /* Red 700 */
+    font-size: 0.625rem;
+    margin-top: 0.25rem;
+    padding-left: 0.75rem;
+}
+
+.success-message {
+    color: #2e7d32; /* Green 700 */
+    font-size: 0.625rem;
+    margin-top: 0.25rem;
+    padding-left: 0.75rem;
+}
+
+button {
+    width: 2/3;
+    padding: 0.5rem;
+    background: #d32f2f; /* Red 700 */
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background: #b71c1c; /* Red 900 */
+}
+
+button:active {
+    background: #a61a1a; /* Red A700 */
+}
